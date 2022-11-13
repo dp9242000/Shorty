@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-*oka1z9s3d@3y-x1q*&r@k=!l)+1sq202jtu1^ppcq35$kftya
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['shortifei.herokuapp.com']
 
 
 # Application definition
@@ -84,14 +84,7 @@ WSGI_APPLICATION = 'shorty.wsgi.application'
 # }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Shorty',
-        'USER': 'shortyadmin',
-        'PASSWORD': 'AAd7QEmr5BSkA5RLJMHq',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
+    'default': dj_database_url.config()
 }
 
 
@@ -135,3 +128,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django_heroku.settings(locals())
