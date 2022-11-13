@@ -9,19 +9,23 @@ def index(request):
 
 def create(request):
     if request.method == 'POST':
-        link = request.POST['link']
+        # url is the url as submitted by the user
+        url = request.POST['link']
+        # regex object to ensure the provided url is prefixed by https://
+        httpRegex = re.compile(r'(^https?://)')
+        # check if the url is prefixed with https://
+        if httpRegex.findall(url):
+            url = 'https://' + url
+        # generate uuid to store with the provided url
         uid = str(uuid.uuid4())[:5]
-        new_url = Url(link=link, uuid=uid)
+        new_url = Url(link=url, uuid=uid)
         new_url.save()
         return HttpResponse(uid)
 
+
+# pk = uuid, get the url using the uuid and then redirect
 def go(request, pk):
-    url_details = Url.objects.get(uuid=pk)
-    httpRegex = re.compile(r'(^https?://)')
-    url = url_details.link
-    if httpRegex.findall(url):
-        return redirect(url)
-    else:
-        return redirect('https://'+url)
+    return str(Url.objects.get(uuid=pk))
+
 
 
