@@ -14,7 +14,7 @@ def create(request):
         # regex object to ensure the provided url is prefixed by https://
         httpRegex = re.compile(r'(^https?://)')
         # check if the url is prefixed with https://
-        if httpRegex.findall(url):
+        if not httpRegex.findall(url):
             url = 'https://' + url
         # generate uuid to store with the provided url
         uid = str(uuid.uuid4())[:5]
@@ -25,7 +25,7 @@ def create(request):
 
 # pk = uuid, get the url using the uuid and then redirect
 def go(request, pk):
-    return str(Url.objects.get(uuid=pk))
+    return redirect(str(Url.objects.get(uuid=pk)))
 
 
 
